@@ -43,7 +43,8 @@ jobs:
             tag_exists=$(git tag -l "v${{ steps.npm-version.outputs.current-version }}")
             if [[ -n "$tag_exists" ]]; then
               echo "Error: Tag 'v${{ steps.npm-version.outputs.current-version }}' already exists."
-              exit 1      
+              exit 1
+            fi
           fi
 
       - name: Install Dependencies
