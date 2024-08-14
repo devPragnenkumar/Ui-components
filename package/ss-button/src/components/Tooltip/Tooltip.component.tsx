@@ -1,3 +1,3 @@
 export const Tooltip = () => {
-  return <div>hiiii</div>;
+  return <div>hiii</div>;
 };
