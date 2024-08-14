@@ -28,7 +28,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Go to Package Directory
-        run: cd package/ss-button
+        run: cd package/ss-button/
+
+      - run: pwd
 
       - name: Get latest git tag
         id: git-tag-latest
@@ -66,7 +68,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Go to Package Directory
-        run: cd package/ss-button
+        run: cd package/ss-button/
 
       - name: Setup Node
         uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
