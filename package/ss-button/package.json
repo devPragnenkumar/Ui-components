@@ -1,6 +1,6 @@
 {
-  "name": "xsada-dsadsad-dsadad-my",
-  "version": "0.0.47",
+  "name": "xsada-dsadsad-dsadad-myp",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
