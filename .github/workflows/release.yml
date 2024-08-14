@@ -9,6 +9,11 @@ on:
 
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+    working-directory: ./package/ss-button # Adjust the path as needed
+
 permissions:
   contents: write
   pull-requests: write
@@ -26,8 +31,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          sparse-checkout: "package/ss-button"
 
       - name: Go to Package Directory
         run: pwd
@@ -42,8 +45,6 @@ jobs:
       - name: Get npm version
         id: npm-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
-        with:
-          working-directory: package/ss-button/
 
       - name: Output versions
         run: |
@@ -67,17 +68,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          sparse-checkout: "package/ss-button"
 
       - name: Go to Package Directory
         run: pwd
 
       - name: Setup Node
         uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
 
       - name: Get npm version
         id: npm-tag
@@ -85,7 +81,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-        working-directory: package/ss-button/
 
       # - name: Linter Checks
       #   run: npm run lint
@@ -93,7 +88,6 @@ jobs:
 
       - name: Build Library
         run: npm run build
-        working-directory: package/ss-button/
 
       # - name: Release Please GitHub Action
       #   uses: googleapis/release-please-action@v4
@@ -107,7 +101,6 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_WORKFLOW }}
-        working-directory: package/ss-button/
 
       - name: Create git tag
         uses: rickstaa/action-create-tag@v1
