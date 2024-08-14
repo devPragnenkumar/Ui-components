@@ -3,7 +3,7 @@ name: pr checks
 on:
   pull_request:
     paths:
-      - package/ss-button/*
+      - package/ss-button/**
   workflow_dispatch:
 
 jobs:
@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        uses: actions/checkout@v4.1.7
 
       - name: Get latest git tag
         id: git-tag-latest
@@ -25,14 +25,14 @@ jobs:
 
       - name: Get npm version
         id: npm-version
-        uses: martinbeentjes/npm-get-version-action@3cf273023a0dda27efcd3164bdfb51908dd46a5b # v1.3.1
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
 
       - name: Output versions
         run: |
-          echo git ${{ env.GIT_VERSION }}
-          echo ${{github.event.pull_request.number}} 
-          echo ${{github.event.number}}
-          echo npm ${{ steps.npm-version.outputs.current-version }}
+          echo "git version: ${{ env.GIT_VERSION }}"
+          echo "Pull request number: ${{ github.event.pull_request.number }}"
+          echo "Event number: ${{ github.event.number }}"
+          echo "npm version: ${{ steps.npm-version.outputs.current-version }}"
 
       - name: Check for existing tag and verify release commit
         run: |
