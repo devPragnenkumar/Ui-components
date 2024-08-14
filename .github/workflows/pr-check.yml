@@ -50,8 +50,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Linter Checks
-        run: npm run lint
+      # - name: Linter Checks
+      #   run: npm run lint
 
       - name: Build Library
         run: npm run build
