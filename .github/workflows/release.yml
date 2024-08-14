@@ -26,15 +26,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          sparse-checkout: "package/ss-button"
 
       - name: Go to Package Directory
-        run: cd package/ss-button/ && pwd
+        run: pwd
 
       - name: Get latest git tag
         id: git-tag-latest
         uses: actions-ecosystem/action-get-latest-tag@v1
-        with:
-          directory: package/ss-button/
 
       - name: Remove tag 'v' prefix
         run: echo "GIT_VERSION=$(echo ${{ steps.git-tag-latest.outputs.tag }} | cut -c2-)" >> $GITHUB_ENV
@@ -42,8 +42,6 @@ jobs:
       - name: Get npm version
         id: npm-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
-        with:
-          working-directory: package/ss-button/
 
       - name: Output versions
         run: |
@@ -67,6 +65,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          sparse-checkout: "package/ss-button"
 
       - name: Go to Package Directory
         run: cd package/ss-button/ && pwd
@@ -80,8 +80,6 @@ jobs:
       - name: Get npm version
         id: npm-tag
         uses: martinbeentjes/npm-get-version-action@v1.3.1
-        with:
-          working-directory: package/ss-button/
 
       - name: Install Dependencies
         run: npm install
@@ -114,3 +112,4 @@ jobs:
         uses: rickstaa/action-create-tag@v1
         with:
           tag: v${{ steps.npm-tag.outputs.current-version }}
+        working-directory: package/ss-button/
