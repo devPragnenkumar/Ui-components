@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "sass-embedded": "^1.77.8",
+    "turbo": "^2.0.12"
+  },
+  "name": "with-vite",
+  "packageManager": "npm@10.8.1",
+  "workspaces": [
+    "config/*",
+    "package/*",
+    "storybook"
+  ]
+}
