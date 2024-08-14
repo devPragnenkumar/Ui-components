@@ -52,7 +52,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shahmargi12/tooltipprivate"
+    "url": "https://github.com/devPragnenkumar/Ui-components",
+    "directory": "package/ss-button"
   },
   "bugs": {
     "url": "https://github.com/shahmargi12/tooltipprivate/issues"
