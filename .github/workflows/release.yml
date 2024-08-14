@@ -60,6 +60,7 @@ jobs:
           else
             echo "Versions do not match. Proceeding with publish."
             echo "bumped=true" >> $GITHUB_OUTPUT
+          fi
           
   build-and-publish:
     runs-on: ubuntu-latest
