@@ -45,6 +45,8 @@ jobs:
       - name: Get npm version
         id: npm-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
+        with:
+          path: package/ss-button
 
       - name: Output versions
         run: |
