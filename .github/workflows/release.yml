@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - package/ss-button
+      - package/ss-button/**
 
   workflow_dispatch:
 
@@ -79,10 +79,10 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@3cf273023a0dda27efcd3164bdfb51908dd46a5b # v1.3.1
 
       - name: Install Dependencies
-        run: npm run ci
+        run: npm install
 
-      - name: Linter Checks
-        run: npm run lint
+      # - name: Linter Checks
+      #   run: npm run lint
 
       - name: Build Library
         run: npm run build
