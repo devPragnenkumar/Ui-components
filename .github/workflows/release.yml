@@ -42,6 +42,8 @@ jobs:
       - name: Get npm version
         id: npm-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
+        with:
+          working-directory: package/ss-button/
 
       - name: Output versions
         run: |
@@ -69,7 +71,7 @@ jobs:
           sparse-checkout: "package/ss-button"
 
       - name: Go to Package Directory
-        run: cd package/ss-button/ && pwd
+        run: pwd
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -102,7 +104,6 @@ jobs:
       #   working-directory: package/ss-button/
 
       - name: Publish Shared Components to npm
-        # if: ${{ steps.release.outputs.release_created }}
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_WORKFLOW }}
@@ -112,4 +113,3 @@ jobs:
         uses: rickstaa/action-create-tag@v1
         with:
           tag: v${{ steps.npm-tag.outputs.current-version }}
-        working-directory: package/ss-button/
