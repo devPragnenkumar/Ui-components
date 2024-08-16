@@ -83,6 +83,9 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@v1.3.1
         with:
           path: package/ss-button
+          registry-url: 'https://registry.npmjs.org/'
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
