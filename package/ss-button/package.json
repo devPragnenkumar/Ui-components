@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "files": [
-    "dist"
+    "dist"public
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/fdfsadsad-rds.es.js",
   "exports": {
     ".": {
