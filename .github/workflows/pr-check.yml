@@ -1,0 +1,57 @@
+name: pr checks
+
+on:
+  pull_request:
+    paths:
+      - package/ss-button/**
+  workflow_dispatch:
+
+jobs:
+  pr-checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.7
+
+      - name: Get latest git tag
+        id: git-tag-latest
+        uses: actions-ecosystem/action-get-latest-tag@v1
+
+      - name: Remove tag 'v' prefix
+        run: echo "GIT_VERSION=$(echo ${{ steps.git-tag-latest.outputs.tag }} | cut -c2-)" >> $GITHUB_ENV
+
+      - name: Get npm version
+        id: npm-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
+      - name: Output versions
+        run: |
+          echo "git version: ${{ env.GIT_VERSION }}"
+          echo "Pull request number: ${{ github.event.pull_request.number }}"
+          echo "Event number: ${{ github.event.number }}"
+          echo "npm version: ${{ steps.npm-version.outputs.current-version }}"
+
+      - name: Check for existing tag and verify release commit
+        run: |
+          if [[ "${{ env.GIT_VERSION }}" == "${{ steps.npm-version.outputs.current-version }}" ]]; then
+            echo "Versions match. Proceeding to the next step."
+          else
+            echo "Versions do not match. Checking if tag exists."
+            tag_exists=$(git tag -l "v${{ steps.npm-version.outputs.current-version }}")
+            if [[ -n "$tag_exists" ]]; then
+              echo "Error: Tag 'v${{ steps.npm-version.outputs.current-version }}' already exists."
+              exit 1
+            fi
+          fi
+
+      - name: Install Dependencies
+        run: npm install
+
+      # - name: Linter Checks
+      #   run: npm run lint
+
+      - name: Build Library
+        run: npm run build
