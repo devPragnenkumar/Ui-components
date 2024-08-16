@@ -3,8 +3,15 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**" , "storybook-static"]
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "storybook/.storybook/**",
+        "storybook/src/**",
+        "storybook/package.json",
+        "!storybook-static/**"
+      ],
+      "outputs": ["dist/**" ,"storybook-static/**"]
     },
     "lint": {},
     "dev": {

@@ -7,5 +7,4 @@ dist-ssr
 *.local
 .env
 .cache
-*/dist
-*/node_modules
+storybook-static
