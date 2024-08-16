@@ -85,7 +85,7 @@ jobs:
           path: package/ss-button
 
       - name: Install Dependencies
-        run: npm install
+        run: npm cache clean --force && npm install
 
       # - name: Linter Checks
       #   run: npm run lint
