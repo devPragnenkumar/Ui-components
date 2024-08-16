@@ -105,7 +105,7 @@ jobs:
       - name: Publish Shared Components to npm
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_WORKFLOW }}
 
       - name: Create git tag
         uses: rickstaa/action-create-tag@v1

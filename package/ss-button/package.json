@@ -2,6 +2,7 @@
   "name": "xsada-dsadsad-dsadad-myp",
   "version": "0.0.1",
   "type": "module",
+  
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -56,7 +57,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/devPragnenkumar/Ui-components",
+    "url": "https://github.com/devPragnenkumar/Ui-components.git",
     "directory": "package/ss-button"
   },
   "bugs": {
