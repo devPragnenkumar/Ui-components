@@ -11,7 +11,19 @@
         "storybook/package.json",
         "!storybook-static/**"
       ],
-      "outputs": ["dist/**" ,"storybook-static/**"]
+      "outputs": ["dist/**", "storybook-static/**"]
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "storybook/.storybook/**",
+        "storybook/src/**",
+        "storybook/package.json",
+        "!storybook-static/**"
+      ],
+      "outputs": ["storybook-static/**"]
     },
     "lint": {},
     "dev": {
