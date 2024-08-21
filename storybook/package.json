@@ -12,7 +12,6 @@
     "chromatic": "npx chromatic --project-token=chpt_d50acab44e9af89"
   },
   "dependencies": {
-    "@repo/ss-button": "*",
     "@repo/ss-header": "*",
     "@repo/ss-link": "*",
     "react": "^18.3.1",
