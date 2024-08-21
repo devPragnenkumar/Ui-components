@@ -3,14 +3,10 @@ name: Deploy Storybook to GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch (change this to your default branch if different)
+      - main  # Adjust if your default branch is different
   pull_request:
     branches:
-      - main  # Trigger on pull requests to the main branch (optional)
-defaults:
-  run:
-    shell: bash
-    working-directory: ./storybook
+      - main  # Optional: for PRs to the main branch
 
 jobs:
   build:
@@ -23,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Specify your Node.js version
+          node-version: 18  # Adjust to your Node.js version
           cache: 'npm'
           registry-url: https://registry.npmjs.org
 
@@ -33,8 +29,14 @@ jobs:
       - name: Build Storybook
         run: npm run build-storybook
 
+      - name: List contents of Storybook build directory
+        run: ls -la ./storybook/storybook-static
+
+      - name: Ensure proper permissions
+        run: chmod -R 755 ./storybook/storybook-static
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
+          publish_dir: ./storybook/storybook-static
