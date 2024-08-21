@@ -7,6 +7,10 @@ on:
   pull_request:
     branches:
       - main  # Trigger on pull requests to the main branch (optional)
+defaults:
+  run:
+    shell: bash
+    working-directory: ./storybook
 
 jobs:
   build:
@@ -32,4 +36,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook/storybook-static
+          publish_dir: ./storybook-static
