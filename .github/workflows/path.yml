@@ -17,8 +17,8 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
-      ssBtn: ${{ steps.filter.outputs.ssBtn }}
-      ssHeader: ${{ steps.filter.outputs.ssHeader }}
+      ssBtn: ${{ steps.filters.outputs.ssBtn }}
+      ssHeader: ${{ steps.filters.outputs.ssHeader }}
     steps:
       - name: Check for changes
         uses: dorny/paths-filter@v2
