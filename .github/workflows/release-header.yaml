@@ -46,7 +46,7 @@ jobs:
         id: npm-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
         with:
-          path: package/ss-button
+          path: package/ss-header
 
       - name: Output versions
         run: |
@@ -84,7 +84,7 @@ jobs:
         id: npm-tag
         uses: martinbeentjes/npm-get-version-action@v1.3.1
         with:
-          path: package/ss-button
+          path: package/ss-header
 
       - name: Install Dependencies
         run: npm cache clean --force && npm install
