@@ -20,6 +20,8 @@ jobs:
       ssBtn: ${{ steps.filters.outputs.ssBtn }}
       ssHeader: ${{ steps.filters.outputs.ssHeader }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Check for changes
         uses: dorny/paths-filter@v2
         id: filter
@@ -33,7 +35,6 @@ jobs:
   ssBtn:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.ssBtn == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -83,7 +84,6 @@ jobs:
   ssHeader:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.ssHeader == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
