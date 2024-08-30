@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Go to Package Directory
-        run: cd package/ss-button && pwd
+        run: ls && cd package/ss-button && pwd
         working-directory: ./package/ss-button
       - name: Setup Node
         uses: actions/setup-node@v4
