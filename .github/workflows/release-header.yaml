@@ -3,7 +3,7 @@ name: release-header
 on:
   push:
     branches:
-      - main
+      - change
     paths:
       - package/ss-header/**
 

@@ -3,7 +3,7 @@ name: release
 on:
   push:
     branches:
-      - main
+      - change
     paths:
       - package/ss-button/**
 

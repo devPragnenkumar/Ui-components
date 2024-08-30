@@ -35,7 +35,7 @@ jobs:
   ssBtn:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.ssBtn == 'true'}}
+    if: ${{ needs.changes.outputs.ssBtn == true}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -85,7 +85,7 @@ jobs:
   ssHeader:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.ssHeader == 'true'}}
+    if: ${{ needs.changes.output.ssHeader == true}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
