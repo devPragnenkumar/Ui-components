@@ -42,7 +42,7 @@ jobs:
 
       - name: Go to Package Directory
         run: cd package/ss-button && pwd
-
+        working-directory: ./package/ss-button
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
