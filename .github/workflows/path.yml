@@ -37,12 +37,12 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.ssBtn == 'true' }}
     steps:
+     
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Go to Package Directory
-        run: ls 
-        working-directory: ./package/ss-button
+        run: ls && cd package/ss-button && pwd
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -55,7 +55,7 @@ jobs:
           path: package/ss-button
 
       - name: Install Dependencies
-        run: npm cache clean --force && npm install
+        run: ls && npm cache clean --force && npm install
 
       - name: Build Library
         run: npm run build
