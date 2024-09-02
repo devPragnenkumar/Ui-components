@@ -1,0 +1,19 @@
+name: "Shared steps for package publish"
+description: "Common steps fto publish package"
+
+inputs:
+  working-directory:
+    description: "The directory where the action should run."
+    required: true
+
+outputs:
+  current-version:
+    description: "The current npm version."
+
+runs:
+  using: "composite"
+  steps:
+      - name: Publish Shared Components to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_WORKFLOW }}

@@ -1,115 +1,102 @@
-name: release
+name: path
 
 on:
   push:
     branches:
-      - change
-    paths:
-      - package/ss-button/**
+      - main
 
   workflow_dispatch:
 
 defaults:
   run:
     shell: bash
-    working-directory: ./package/ss-button # Adjust the path as needed
-
-permissions:
-  contents: write
-  pull-requests: write
-  
-concurrency:
-  group: library-publish
-  cancel-in-progress: false
 
 jobs:
-  check-version:
+  changes:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
     outputs:
-      version-bumped: ${{ steps.version-check.outputs.bumped }}
-      
+      ssBtn: ${{ steps.filter.outputs.ssBtn }}
+      ssHeader: ${{ steps.filter.outputs.ssHeader }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Go to Package Directory
-        run: pwd
-
-      - name: Get latest git tag
-        id: git-tag-latest
-        uses: actions-ecosystem/action-get-latest-tag@v1
-
-      - name: Remove tag 'v' prefix
-        run: echo "GIT_VERSION=$(echo ${{ steps.git-tag-latest.outputs.tag }} | cut -c2-)" >> $GITHUB_ENV
-
-      - name: Get npm version
-        id: npm-version
-        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - name: Check for changes
+        uses: dorny/paths-filter@v3
+        id: filter
         with:
-          path: package/ss-button
+          filters: |
+            ssBtn:
+              - 'package/ss-button/**'
+            ssHeader:
+              - 'package/ss-header/**'
 
-      - name: Output versions
-        run: |
-          echo git ${{ env.GIT_VERSION }}
-          echo npm ${{ steps.npm-version.outputs.current-version }}
-
-      - name: Check if version is bumped
-        id: version-check
-        run: |
-          if [[ "${{ env.GIT_VERSION }}" == "${{ steps.npm-version.outputs.current-version }}" ]]; then
-            echo "Versions match. Skipping publish."
-            echo "bumped=false" >> $GITHUB_OUTPUT
-          else
-            echo "Versions do not match. Proceeding with publish."
-            echo "bumped=true" >> $GITHUB_OUTPUT
-          fi
-          
-  build-and-publish:
+  ssBtn:
     runs-on: ubuntu-latest
-    needs: check-version
-    if: needs.check-version.outputs.version-bumped == 'true'
+    needs: changes
+    if: ${{ needs.changes.outputs.ssBtn == 'true' }}
     steps:
-      - name: Checkout repository
+      - name: Run Shared Node.js Steps
+        uses: ./.github/actions/build
+        with:
+          working-directory: package/ss-button
+      - name: Run Shared Publish Steps
+        uses: ./.github/actions/publish
+        with:
+          working-directory: package/ss-button 
+
+  ssHeader:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.ssHeader == 'true' }}
+    defaults:
+      run:
+        working-directory: package/ss-header
+
+    steps:
+      - name: Run Shared Node.js Steps
+        uses: ./.github/actions/build
+        with:
+          working-directory: package/ss-button
+      - name: Run Shared Publish Steps
+        uses: ./.github/actions/publish
+        with:
+          working-directory: package/ss-button 
+
+  publish-storybook:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.ssHeader == 'true' }}
+    defaults:
+      run:
+        working-directory: storybook
+
+    steps:
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Go to Package Directory
-        run: pwd
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
+          node-version: 18 # Adjust to your Node.js version
+          cache: "npm"
           registry-url: https://registry.npmjs.org
-        
-      - name: Get npm version
-        id: npm-tag
-        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: List contents of Storybook build directory
+        run: ls -la ./storybook/storybook-static
+
+      - name: Ensure proper permissions
+        run: chmod -R 755 ./storybook/storybook-static
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: package/ss-button
-
-      - name: Install Dependencies
-        run: npm cache clean --force && npm install
-
-      # - name: Linter Checks
-      #   run: npm run lint
-      #   working-directory: package/ss-button/
-
-      - name: Build Library
-        run: npm run build
-
-      # - name: Release Please GitHub Action
-      #   uses: googleapis/release-please-action@v4
-      #   id: release
-      #   with:
-      #     release-type: node
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #   working-directory: package/ss-button/
-
-      - name: Publish Shared Components to npm
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_WORKFLOW }}
-
-      - name: Create git tag
-        uses: rickstaa/action-create-tag@v1
-        with:
-          tag: v${{ steps.npm-tag.outputs.current-version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: storybook/storybook-static

@@ -1,0 +1,32 @@
+name: "Shared steps for project build"
+description: "Common steps for setting up Node.js, installing dependencies, building"
+
+inputs:
+  working-directory:
+    description: "The directory where the action should run."
+    required: true
+
+outputs:
+  current-version:
+    description: "The current npm version."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        registry-url: https://registry.npmjs.org
+
+    - name: Get npm version
+      id: npm-tag
+      uses: martinbeentjes/npm-get-version-action@v1.3.1
+
+    - name: Install Dependencies
+      run: npm cache clean --force && npm install
+
+    - name: Build Library
+      run: npm run build
