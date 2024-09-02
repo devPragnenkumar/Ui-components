@@ -35,36 +35,32 @@ jobs:
   ssBtn:
     needs: changes
     if: ${{ needs.changes.outputs.ssBtn == 'true' }}
+    name: create build
     uses: ./.github/workflows/build.yml
     with:
       working-directory: package/ss-button
 
   ssBtnPublish:
-    needs: ssBtn
+    needs: [ssHeader, ssBtn]
+    name: publish package
     uses: ./.github/workflows/publish-package.yml
     with:
       working-directory: package/ss-button
 
   ssHeader:
     needs: changes
-    runs-on: ubuntu-latest
     if: ${{ needs.changes.outputs.ssHeader == 'true' }}
-    defaults:
-      run:
-        working-directory: package/ss-header
+    name: create build
+    uses: ./.github/workflows/build.yml
+    with:
+      working-directory: package/ss-header
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Run Shared Node.js Steps
-        uses: ./build.yml
-        with:
-          working-directory: package/ss-button
-      - name: Run Shared Publish Steps
-        uses: ./publish.yml
-        with:
-          working-directory: package/ss-button 
-
+  ssHeaderPublish:
+    needs: [ssHeader, ssBtn]
+    name: publish package
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      working-directory: package/ss-header
   publish-storybook:
     runs-on: ubuntu-latest
     needs: changes
