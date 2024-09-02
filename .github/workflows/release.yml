@@ -42,6 +42,7 @@ jobs:
 
   ssBtnPublish:
     needs: [ssHeader, ssBtn]
+    if: ${{ needs.ssBtn.result == 'success' && (needs.ssHeader.result == 'success' || needs.ssHeader.result == 'skipped') }}
     name: publish package
     uses: ./.github/workflows/publish-package.yml
     with:
@@ -57,6 +58,7 @@ jobs:
 
   ssHeaderPublish:
     needs: [ssHeader, ssBtn]
+    if: ${{ needs.ssHeader.result == 'success' && (needs.ssBtn.result == 'success' || needs.ssBtn.result == 'skipped') }}
     name: publish package
     uses: ./.github/workflows/publish-package.yml
     with:

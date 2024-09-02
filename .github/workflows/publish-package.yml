@@ -14,7 +14,7 @@ on:
 
 
 jobs:
-  setup-and-build:
+  publish-package:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
