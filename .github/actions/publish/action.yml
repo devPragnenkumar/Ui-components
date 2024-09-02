@@ -12,8 +12,15 @@ outputs:
 
 runs:
   using: "composite"
-  steps:
-      - name: Publish Shared Components to npm
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_WORKFLOW }}
+
+  steps: 
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        registry-url: https://registry.npmjs.org
+
+    - name: Publish Shared Components to npm
+      shell: bash 
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_WORKFLOW }}

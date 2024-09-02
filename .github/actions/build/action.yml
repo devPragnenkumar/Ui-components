@@ -23,10 +23,13 @@ runs:
 
     - name: Get npm version
       id: npm-tag
+      shell: bash 
       uses: martinbeentjes/npm-get-version-action@v1.3.1
 
     - name: Install Dependencies
+      shell: bash 
       run: npm cache clean --force && npm install
 
     - name: Build Library
+      shell: bash 
       run: npm run build
