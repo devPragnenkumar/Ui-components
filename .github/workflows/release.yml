@@ -33,20 +33,15 @@ jobs:
               - 'package/ss-header/**'
 
   ssBtn:
-    runs-on: ubuntu-latest
-    needs: changes
     if: ${{ needs.changes.outputs.ssBtn == 'true' }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Run Shared Node.js Steps
-        uses: ./.github/workflows/build
-        with:
-          working-directory: package/ss-button
-      - name: Run Shared Publish Steps
-        uses: ./.github/workflows/publish-package
-        with:
-          working-directory: package/ss-button 
+    uses: ./.github/workflows/build.yml
+    with:
+      working-directory: package/ss-button
+  ssBtnPublish:
+    needs: ssBtn
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      working-directory: package/ss-button
 
   ssHeader:
     runs-on: ubuntu-latest
