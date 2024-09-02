@@ -40,11 +40,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run Shared Node.js Steps
-        uses: ./.github/actions/build
+        uses: ./build.yml
         with:
           working-directory: package/ss-button
       - name: Run Shared Publish Steps
-        uses: ./.github/actions/publish
+        uses: ./publish-package.yml
         with:
           working-directory: package/ss-button 
 
@@ -60,11 +60,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run Shared Node.js Steps
-        uses: ./.github/actions/build
+        uses: ./build.yml
         with:
           working-directory: package/ss-button
       - name: Run Shared Publish Steps
-        uses: ./.github/actions/publish
+        uses: ./publish.yml
         with:
           working-directory: package/ss-button 
 
