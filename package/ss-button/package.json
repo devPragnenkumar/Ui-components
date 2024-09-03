@@ -1,8 +1,7 @@
 {
   "name": "@pragnen/ss-button",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
-  
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
