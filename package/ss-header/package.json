@@ -1,6 +1,5 @@
 {
   "name": "@repo/ss-header",
-  "private": false,
   "version": "0.0.2",
   "type": "module",
   "scripts": {
@@ -8,6 +7,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "exports": {
     ".": "./src/header.tsx"
