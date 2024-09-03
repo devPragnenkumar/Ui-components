@@ -70,8 +70,8 @@ jobs:
 
   publish-storybook:
     runs-on: ubuntu-latest
-    needs: [ssHeaderPublish, ssBtnPublish]
-    if: ${{  always() &&( (needs.ssHeaderPublish.result == 'success'  && (needs.ssBtnPublish.result == 'success' || needs.ssBtnPublish.result == 'skipped')) || (needs.ssBtnPublish.result == 'success'  && (needs.ssHeaderPublish.result == 'success' || needs.ssHeaderPublish.result == 'skipped')) )}}
+    # needs: [ssHeaderPublish, ssBtnPublish]
+    # if: ${{  always() &&( (needs.ssHeaderPublish.result == 'success'  && (needs.ssBtnPublish.result == 'success' || needs.ssBtnPublish.result == 'skipped')) || (needs.ssBtnPublish.result == 'success'  && (needs.ssHeaderPublish.result == 'success' || needs.ssHeaderPublish.result == 'skipped')) )}}
     defaults:
       run:
         working-directory: storybook
@@ -94,10 +94,10 @@ jobs:
         run: npm run build-storybook
 
       - name: List contents of Storybook build directory
-        run: ls -la ./storybook/storybook-static
+        run: storybook-static
 
       - name: Ensure proper permissions
-        run: chmod -R 755 ./storybook/storybook-static
+        run: chmod -R 755 storybook-static
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
