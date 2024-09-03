@@ -1,7 +1,5 @@
 name: "Shared steps for package publish"
 
-
-
 on:
   workflow_call:
     inputs:
@@ -10,18 +8,17 @@ on:
         required: true
         type: string
 
-defaults:
-  run:
-    shell: bash
-    working-directory: ${{ inputs.working-directory }} # Adjust the path as needed
-
 jobs:
   publish-package:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.working-directory }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
