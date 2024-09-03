@@ -19,7 +19,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          registry-url: https://registry.npmjs.org
+          
       - name: Publish Shared Components to npm
         run: |
           cd ${{ inputs.working-directory }}
