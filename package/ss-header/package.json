@@ -1,6 +1,6 @@
 {
   "name": "@repo/ss-header",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,6 +14,9 @@
   "exports": {
     ".": "./src/header.tsx"
   },
+  "files": [
+    "dist"
+  ],
   "main": "./dist/ss-header.js",
   "dependencies": {
     "react": "^18.3.1",
@@ -33,5 +36,14 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.0",
     "vite": "^5.4.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devPragnenkumar/Ui-components.git",
+    "directory": "package/ss-header"
+  },
+  "bugs": {
+    "url": "https://github.com/shahmargi12/tooltipprivate/issues"
+  },
+  "homepage": "https://github.com/shahmargi12/tooltipprivate#readme"
 }
