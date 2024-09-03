@@ -1,4 +1,4 @@
 function Header({ children }: Readonly<{ children: string }>) {
-  return <div>{children}</div>;
+  return <div>{children} updates</div>;
 }
 export { Header };
