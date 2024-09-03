@@ -47,6 +47,7 @@ jobs:
     uses: ./.github/workflows/publish-package.yml
     with:
       working-directory: package/ss-button
+      npm_publish_workflow: ${{ secrets.NPM_PUBLISH_WORKFLOW }}
 
   ssHeader:
     needs: changes
@@ -63,6 +64,7 @@ jobs:
     uses: ./.github/workflows/publish-package.yml
     with:
       working-directory: package/ss-header
+      npm_publish_workflow: ${{ secrets.NPM_PUBLISH_WORKFLOW }}
 
   publish-storybook:
     runs-on: ubuntu-latest

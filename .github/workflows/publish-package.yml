@@ -7,6 +7,10 @@ on:
         description: "The directory where the action should run."
         required: true
         type: string
+      npm_publish_workflow:
+        description: "npm publish workflow"
+        required: true
+        type: string
 
 jobs:
   publish-package:
@@ -27,4 +31,4 @@ jobs:
       - name: Publish Shared Components to npm
         run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_WORKFLOW }}
+          NODE_AUTH_TOKEN: ${{ inputs.npm_publish_workflow  }}
