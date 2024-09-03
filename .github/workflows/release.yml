@@ -77,27 +77,18 @@ jobs:
         working-directory: storybook
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # Manual Checkout
+      - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      # Set up Node
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18 # Adjust to your Node.js version
-          cache: "npm"
-          registry-url: https://registry.npmjs.org
+          node-version: '18.x'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Storybook
-        run: npm run build-storybook
-
-      - name: List contents of Storybook build directory
-        run: ls ./storybook-static
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
+      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: storybook-static
+          install_command: npm install # default: npm ci
+          build_command: npm build-storybook # default: npm run build-storybook
+          path: storybook-static # default: dist/storybook
+          checkout: false # default: true
