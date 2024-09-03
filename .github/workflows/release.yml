@@ -42,7 +42,7 @@ jobs:
 
   ssBtnPublish:
     needs: [ssHeader, ssBtn]
-    if: always() && ${{ needs.ssBtn.result == 'success' && (needs.ssHeader.result == 'success' || needs.ssHeader.result == 'skipped') }}
+    if: ${{  always() &&  needs.ssBtn.result == 'success' && (needs.ssHeader.result == 'success' || needs.ssHeader.result == 'skipped') }}
     name: publish package
     uses: ./.github/workflows/publish-package.yml
     with:
@@ -58,7 +58,7 @@ jobs:
 
   ssHeaderPublish:
     needs: [ssHeader, ssBtn]
-    if: always() && ${{ needs.ssHeader.result == 'success' && (needs.ssBtn.result == 'success' || needs.ssBtn.result == 'skipped') }}
+    if: ${{ always() && needs.ssHeader.result == 'success' && (needs.ssBtn.result == 'success' || needs.ssBtn.result == 'skipped') }}
     name: publish package
     uses: ./.github/workflows/publish-package.yml
     with:
@@ -67,7 +67,7 @@ jobs:
   publish-storybook:
     runs-on: ubuntu-latest
     needs: [ssHeaderPublish, ssBtnPublish]
-    if: always() && ${{ (needs.ssHeaderPublish.result == 'success'  && (needs.ssBtnPublish.result == 'success' || needs.ssBtnPublish.result == 'skipped')) || (needs.ssBtnPublish.result == 'success'  && (needs.ssHeaderPublish.result == 'success' || needs.ssHeaderPublish.result == 'skipped')) }}
+    if: ${{  always() &&( (needs.ssHeaderPublish.result == 'success'  && (needs.ssBtnPublish.result == 'success' || needs.ssBtnPublish.result == 'skipped')) || (needs.ssBtnPublish.result == 'success'  && (needs.ssHeaderPublish.result == 'success' || needs.ssHeaderPublish.result == 'skipped')) )}}
     defaults:
       run:
         working-directory: storybook
