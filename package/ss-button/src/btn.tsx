@@ -5,7 +5,7 @@ function Btn({ label }: Readonly<{ label: string }>) {
         window.alert("SS button clicked");
       }}
     >
-      {label} updated
+      {label}
     </button>
   );
 }
