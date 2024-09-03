@@ -94,10 +94,10 @@ jobs:
         run: npm run build-storybook
 
       - name: List contents of Storybook build directory
-        run: storybook-static
+        run: ls ./storybook-static
 
-      - name: Ensure proper permissions
-        run: chmod -R 755 storybook-static
+      # - name: Ensure proper permissions
+      #   run: chmod -R 755 storybook-static
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
